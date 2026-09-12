@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BkT · videos</title>
+<meta name="description" content="El recorte es el recorte. Acá está lo que pasó completo.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="🧸 BkT · videos">
+<meta property="og:description" content="Viste el pedazo. Falta el resto.">
+<meta property="og:locale" content="es_CO">
+<meta property="og:url" content="https://bkt.brokenteddy.com/">
+<meta name="twitter:card" content="summary">
+
+<style>
+  :root{
+    --bg:#100a16;
+    --bg-card:#1a1024;
+    --line:#2e2038;
+    --ink:#ece7ef;
+    --ink-soft:#918799;
+    --morado:#7c3aed;
+    --morado-hondo:#4c1d95;
+    --rosa:#f472b6;
+
+    --ui:"Press Start 2P",ui-monospace,SFMono-Regular,"Cascadia Mono",Menlo,Consolas,monospace;
+    --prosa:ui-sans-serif,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--prosa);
+    line-height:1.5;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding:2rem 1.1rem 3rem;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  .crt{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:9;
+    background:
+      repeating-linear-gradient(rgba(0,0,0,.30) 0 1px, transparent 1px 3px),
+      radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.55) 100%);
+  }
+
+  .marco{max-width:25rem;margin:0 auto;position:relative;z-index:1;width:100%}
+
+  .pixel{
+    border:0;
+    border-radius:0;
+    box-shadow:
+      0 -4px 0 0 var(--line),
+      0  4px 0 0 var(--line),
+      -4px 0 0 0 var(--line),
+       4px 0 0 0 var(--line);
+  }
+
+  .titulo{text-align:center;margin-bottom:2rem}
+
+  .cartucho{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:5.25rem;
+    height:5.25rem;
+    background:var(--bg-card);
+    font-size:2.6rem;
+    line-height:1;
+    margin-bottom:1.1rem;
+  }
+  .oso{display:block;animation:flota 3.4s ease-in-out infinite}
+  @keyframes flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+  .sigla{
+    font-family:var(--ui);
+    font-size:1.5rem;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    display:block;
+  }
+  .seccion{
+    font-family:var(--ui);
+    font-size:.6rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    display:block;
+    margin-top:.85rem;
+  }
+
+  .verso{
+    font-family:var(--ui);
+    font-size:.9rem;
+    line-height:1.75;
+    color:var(--rosa);
+    text-align:center;
+    margin-bottom:1.1rem;
+    text-wrap:balance;
+  }
+
+  .play{
+    display:block;
+    width:100%;
+    background:var(--morado);
+    color:#fff;
+    text-decoration:none;
+    text-align:center;
+    padding:1.15rem 1rem .95rem;
+    border:0;
+    border-radius:0;
+    box-shadow:0 6px 0 0 var(--morado-hondo);
+    transition:filter .12s,transform .06s,box-shadow .06s;
+  }
+  .play:hover{filter:brightness(1.14)}
+  .play:active{transform:translateY(4px);box-shadow:0 2px 0 0 var(--morado-hondo)}
+  .play:focus-visible{outline:3px solid var(--rosa);outline-offset:4px}
+
+  .play .grande{
+    display:block;
+    font-family:var(--ui);
+    font-size:1.05rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+  }
+  .play .chico{
+    display:block;
+    font-family:var(--ui);
+    font-size:.58rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    opacity:.78;
+    margin-top:.6rem;
+  }
+
+  .porque{
+    color:var(--ink-soft);
+    font-size:.92rem;
+    text-align:center;
+    margin-top:1.15rem;
+    text-wrap:balance;
+  }
+
+  .firma{
+    font-family:var(--ui);
+    font-size:.55rem;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    text-align:center;
+    margin-top:2.75rem;
+    opacity:.55;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .oso{animation:none}
+    .play{transition:none}
+    .crt{background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.5) 100%)}
+  }
+</style>
+</head>
+<body>
+
+<div class="crt" aria-hidden="true"></div>
+
+<main class="marco">
+
+  <div class="titulo">
+    <div class="cartucho pixel"><span class="oso" aria-hidden="true">🧸</span></div>
+    <span class="sigla">BkT</span>
+    <span class="seccion">videos</span>
+  </div>
+
+  <p class="verso">Viste el pedazo.<br>Falta el resto.</p>
+
+  <a class="play" id="ver"
+     href="https://www.youtube.com/watch?v=x9r-XnUg4gI"
+     data-android="intent://www.youtube.com/watch?v=x9r-XnUg4gI#Intent;scheme=https;package=com.google.android.youtube"
+     data-ios="youtube://www.youtube.com/watch?v=x9r-XnUg4gI">
+    <span class="grande">▶ El video completo</span>
+    <span class="chico">en YouTube</span>
+  </a>
+
+  <p class="porque">Sin cortes, sin subtítulos encima, y con las partes que no caben en un minuto.</p>
+
+  <p class="firma">Skrt</p>
+
+</main>
+
+<script>
+(function () {
+  var esAndroid = /Android/i.test(navigator.userAgent);
+  var esIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+              (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  if (!esAndroid && !esIOS) return;
+
+  Array.prototype.forEach.call(
+    document.querySelectorAll("a[data-android], a[data-ios]"),
+    function (a) {
+      a.addEventListener("click", function (e) {
+        var web = a.getAttribute("href");
+        if (!web) return;
+
+        if (esAndroid) {
+          var intento = a.getAttribute("data-android");
+          if (!intento) return;
+          e.preventDefault();
+          window.location.href = intento +
+            ";S.browser_fallback_url=" + encodeURIComponent(web) + ";end";
+          return;
+        }
+
+        var esquema = a.getAttribute("data-ios");
+        if (!esquema) return;
+        e.preventDefault();
+
+        var red = setTimeout(function () { window.location.href = web; }, 1400);
+        function cancelar() { clearTimeout(red); }
+        document.addEventListener("visibilitychange", function () {
+          if (document.hidden) cancelar();
+        }, { once: true });
+        window.addEventListener("pagehide", cancelar, { once: true });
+
+        window.location.href = esquema;
+      });
+    }
+  );
+})();
+</script>
+
+</body>
+</html>
