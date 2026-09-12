@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>probar</title>
+
+<style>
+  :root{
+    --bg:#100a16;--bg-card:#1a1024;--line:#2e2038;--ink:#ece7ef;
+    --ink-soft:#918799;--morado:#7c3aed;--morado-hondo:#4c1d95;--rosa:#f472b6;
+    --ui:"Press Start 2P",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --prosa:ui-sans-serif,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--prosa);
+       line-height:1.5;padding:1.5rem 1rem 3rem}
+  .marco{max-width:25rem;margin:0 auto}
+  h1{font-family:var(--ui);font-size:.85rem;letter-spacing:.15em;
+     text-transform:uppercase;margin-bottom:.5rem}
+  .sub{color:var(--ink-soft);font-size:.86rem;margin-bottom:1.5rem}
+  .sistema{font-family:var(--ui);font-size:.6rem;color:var(--rosa);
+           letter-spacing:.15em;margin-bottom:1.25rem}
+  a.v{display:block;width:100%;background:var(--bg-card);color:#fff;
+      text-decoration:none;padding:.95rem .9rem;margin-bottom:.85rem;
+      border:0;border-radius:0;
+      box-shadow:0 -3px 0 0 var(--line),0 3px 0 0 var(--line),
+                 -3px 0 0 0 var(--line),3px 0 0 0 var(--line)}
+  a.v:active{background:var(--morado-hondo)}
+  a.v .n{display:block;font-family:var(--ui);font-size:.72rem;
+         letter-spacing:.12em;text-transform:uppercase;color:var(--rosa)}
+  a.v .d{display:block;font-size:.74rem;color:var(--ink-soft);
+         margin-top:.45rem;word-break:break-all;font-family:monospace}
+  .nota{color:var(--ink-soft);font-size:.8rem;margin-top:1.5rem;
+        border-top:3px solid var(--line);padding-top:1rem}
+</style>
+</head>
+<body>
+<main class="marco">
+  <h1>Prueba de apertura</h1>
+  <p class="sub">Tocá cada una <b>desde el link de la bio</b> (no copies la URL al navegador: el
+     escenario que cuenta es el navegador de Instagram). Anotá cuáles abren la app de YouTube.</p>
+  <p class="sistema" id="sis"></p>
+
+  <a class="v" id="A" href="https://www.youtube.com/watch?v=x9r-XnUg4gI">
+    <span class="n">A · vnd.youtube + paquete</span>
+    <span class="d">intent://x9r-XnUg4gI · scheme=vnd.youtube</span></a>
+
+  <a class="v" id="B" href="https://www.youtube.com/watch?v=x9r-XnUg4gI">
+    <span class="n">B · https + paquete</span>
+    <span class="d">intent://…/watch?v= · scheme=https</span></a>
+
+  <a class="v" id="C" href="https://www.youtube.com/watch?v=x9r-XnUg4gI">
+    <span class="n">C · vnd.youtube sin paquete</span>
+    <span class="d">intent://x9r-XnUg4gI · sin package</span></a>
+
+  <a class="v" id="D" href="https://www.youtube.com/watch?v=x9r-XnUg4gI">
+    <span class="n">D · youtube://watch?v=</span>
+    <span class="d">youtube://watch?v=x9r-XnUg4gI</span></a>
+
+  <a class="v" id="E" href="https://www.youtube.com/watch?v=x9r-XnUg4gI">
+    <span class="n">E · vnd.youtube://ID</span>
+    <span class="d">vnd.youtube://x9r-XnUg4gI</span></a>
+
+  <a class="v" id="F" href="https://www.youtube.com/watch?v=x9r-XnUg4gI">
+    <span class="n">F · youtube:// + url completa</span>
+    <span class="d">youtube://www.youtube.com/watch?v=…</span></a>
+
+  <a class="v" id="G" href="https://www.youtube.com/watch?v=x9r-XnUg4gI">
+    <span class="n">G · https pelado (control)</span>
+    <span class="d">sin receta — comportamiento por defecto</span></a>
+
+  <p class="nota">Si ninguna abre la app, eso también es un dato: significa que el webview de
+     Instagram está bloqueando el salto y hay que resolverlo de otra forma.</p>
+</main>
+
+<script>
+(function () {
+  var ID = "x9r-XnUg4gI";
+  var WEB = "https://www.youtube.com/watch?v=" + ID;
+
+  var esAndroid = /Android/i.test(navigator.userAgent);
+  var esIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+              (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  document.getElementById("sis").textContent =
+    esAndroid ? "detectado: Android — probá A, B, C y G"
+    : esIOS   ? "detectado: iPhone — probá D, E, F y G"
+              : "detectado: escritorio — esto hay que probarlo en el teléfono";
+
+  var recetas = {
+    A: {and: "intent://" + ID + "#Intent;scheme=vnd.youtube;package=com.google.android.youtube"},
+    B: {and: "intent://www.youtube.com/watch?v=" + ID + "#Intent;scheme=https;package=com.google.android.youtube"},
+    C: {and: "intent://" + ID + "#Intent;scheme=vnd.youtube"},
+    D: {ios: "youtube://watch?v=" + ID},
+    E: {ios: "vnd.youtube://" + ID},
+    F: {ios: "youtube://www.youtube.com/watch?v=" + ID}
+  };
+
+  Object.keys(recetas).forEach(function (k) {
+    var a = document.getElementById(k);
+    var r = recetas[k];
+    a.addEventListener("click", function (e) {
+      if (esAndroid && r.and) {
+        e.preventDefault();
+        window.location.href = r.and +
+          ";S.browser_fallback_url=" + encodeURIComponent(WEB) + ";end";
+        return;
+      }
+      if (esIOS && r.ios) {
+        e.preventDefault();
+        var red = setTimeout(function () { window.location.href = WEB; }, 1400);
+        function cancelar() { clearTimeout(red); }
+        document.addEventListener("visibilitychange", function () {
+          if (document.hidden) cancelar();
+        }, { once: true });
+        window.addEventListener("pagehide", cancelar, { once: true });
+        window.location.href = r.ios;
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
